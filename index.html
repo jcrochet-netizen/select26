@@ -51,9 +51,15 @@
   .af26-hint{text-align:center;font-size:13px;color:#888;margin-top:12px;font-style:italic}
   .af26-result{display:none}
   .af26-result.af26-result-active{display:block}
-  .af26-result-header{text-align:center;padding:24px;background:linear-gradient(135deg,#006233 0%,#C1272D 100%);color:#fff;border-radius:10px;margin-bottom:24px}
-  .af26-result-header h2{margin:0 0 8px;font-size:28px;font-weight:800}
-  .af26-result-header p{margin:0;font-size:15px;opacity:.95}
+  .af26-result-header{padding:20px 22px;background:linear-gradient(135deg,#006233 0%,#C1272D 100%);color:#fff;border-radius:10px;margin-bottom:0;position:relative;overflow:hidden}
+  .af26-result-header h2{margin:0 0 6px;font-size:24px;font-weight:800}
+  .af26-result-header p{margin:0;font-size:14px;opacity:.95}
+  .af26-capture-zone{background:#fff;border-radius:10px;padding-bottom:0;margin-bottom:20px}
+  .af26-capture-zone .af26-result-section:first-of-type{margin-top:24px}
+  .af26-capture-credit{text-align:center;padding:16px 16px 20px;border-top:2px dashed #ddd;color:#888;font-size:13px;font-style:italic;margin-top:8px}
+  .af26-share-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+  .af26-share-actions .af26-sbtn{margin:0;display:inline-flex}
+  .af26-download{background:linear-gradient(135deg,#006233 0%,#004d27 100%)}
   .af26-result-section{margin-bottom:24px;background:#fafafa;border-radius:10px;padding:16px;border-left:4px solid #C1272D}
   .af26-result-section h3{margin:0 0 12px;color:#C1272D;font-size:16px;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
   .af26-badge{background:#C1272D;color:#fff;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700}
@@ -140,11 +146,19 @@
   </div>
 
   <div class="af26-result">
-    <div class="af26-result-header">
-      <h2>✅ Voici tes 26 Lions de l'Atlas</h2>
-      <p>Ta sélection officielle pour la Coupe du Monde</p>
+    <div class="af26-capture-zone">
+      <div class="af26-result-header">
+        <div class="af26-header-row">
+          <div class="af26-header-logo" role="img" aria-label="Afrik-Foot.com"></div>
+          <div class="af26-header-text">
+            <h2>✅ Voici tes 26 Lions de l'Atlas</h2>
+            <p>Ta sélection officielle pour la Coupe du Monde</p>
+          </div>
+        </div>
+      </div>
+      <div class="af26-result-content"></div>
+      <div class="af26-capture-credit">Sélection composée sur afrik-foot.com</div>
     </div>
-    <div class="af26-result-content"></div>
 
     <div class="af26-share-block">
       <h3>📢 Partage ta sélection</h3>
@@ -166,13 +180,12 @@
           <span>Instagram</span>
         </button>
       </div>
-      <button class="af26-sbtn af26-copy" data-share="copy">📋 Copier le texte</button>
+      <div class="af26-share-actions">
+        <button class="af26-sbtn af26-copy" data-share="copy">📋 Copier le texte</button>
+        <button class="af26-sbtn af26-download" data-share="download">📥 Télécharger l'image</button>
+      </div>
     </div>
 
-    <div class="af26-logo-block">
-      <div class="af26-result-logo" role="img" aria-label="Afrik-Foot.com"></div>
-      <p>Sélection partagée via afrik-foot.com</p>
-    </div>
     <div class="af26-actions">
       <button class="af26-btn af26-btn-secondary af26-back">Modifier ma sélection</button>
     </div>
@@ -374,6 +387,45 @@
           setTimeout(function(){ btn.innerHTML = orig; }, 2000);
         });
         break;
+      case 'download':
+        downloadImage(btn);
+        break;
+    }
+  }
+
+  function downloadImage(btn){
+    var orig = btn.innerHTML;
+    btn.innerHTML = "⏳ Génération...";
+    btn.disabled = true;
+    function doCapture(){
+      var target = root.querySelector('.af26-capture-zone');
+      window.html2canvas(target, {backgroundColor:'#ffffff', scale:2, useCORS:true, logging:false}).then(function(canvas){
+        var link = document.createElement('a');
+        link.download = 'mes-26-lions-atlas.png';
+        link.href = canvas.toDataURL('image/png');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        btn.innerHTML = "✅ Téléchargé !";
+        setTimeout(function(){ btn.innerHTML = orig; btn.disabled = false; }, 2000);
+      }).catch(function(err){
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        alert("Impossible de générer l'image. Réessaie ou prends une capture d'écran.");
+      });
+    }
+    if (window.html2canvas) {
+      doCapture();
+    } else {
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+      s.onload = doCapture;
+      s.onerror = function(){
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        alert("Impossible de charger la librairie d'image.");
+      };
+      document.head.appendChild(s);
     }
   }
 
