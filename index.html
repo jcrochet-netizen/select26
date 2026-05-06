@@ -8,12 +8,9 @@
 <meta name="description" content="Choisis et partage les 26 joueurs marocains que tu veux voir au Mondial 2026 avec le Maroc.">
 <style>
   *,*::before,*::after{box-sizing:border-box}
-  html,body{margin:0;padding:0;height:100%}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,sans-serif;background:transparent;color:#222;line-height:1.4;height:100%;overflow:hidden}
-  .af26-widget{width:100%;height:100%;padding:14px;background:#fff;display:flex;flex-direction:column;overflow:hidden}
-  .af26-selection{display:flex;flex-direction:column;flex:1;min-height:0}
-  .af26-result{display:none}
-  .af26-result.af26-result-active{display:flex;flex-direction:column;flex:1;min-height:0}
+  html,body{margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,sans-serif;background:transparent;color:#222;line-height:1.4}
+  .af26-widget{max-width:1100px;margin:0 auto;padding:18px;background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
   .af26-header{background:linear-gradient(135deg,#C1272D 0%,#8B1B20 100%);color:#fff;padding:20px 22px;border-radius:10px;margin-bottom:20px;position:relative;overflow:hidden}
   .af26-header::before{content:"";position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:#006233;border-radius:50%;opacity:.25}
   .af26-header-row{display:flex;align-items:center;gap:18px;justify-content:center;position:relative;flex-wrap:wrap}
@@ -39,7 +36,7 @@
   .af26-tab:hover{color:#C1272D}
   .af26-tab.af26-tab-active{color:#C1272D;border-bottom-color:#C1272D}
   .af26-section{display:none}
-  .af26-section.af26-section-active{display:block;flex:1;overflow-y:auto;min-height:0;padding-right:6px;margin-bottom:8px}
+  .af26-section.af26-section-active{display:block}
   .af26-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
   .af26-player{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fafafa;border:2px solid #eee;border-radius:8px;cursor:pointer;transition:all .2s;user-select:none}
   .af26-player:hover{border-color:#C1272D;background:#fff;transform:translateY(-1px);box-shadow:0 3px 10px rgba(193,39,45,.12)}
@@ -50,23 +47,22 @@
   .af26-player.af26-selected .af26-check::after{content:"\2713";color:#006233;font-weight:900;font-size:14px}
   .af26-info{flex:1;min-width:0}
   .af26-name{font-weight:700;font-size:14px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .af26-actions{display:flex;gap:10px;margin-top:10px;justify-content:center;flex-wrap:wrap;flex-shrink:0}
-  .af26-btn{padding:11px 22px;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.3px;font-family:inherit}
+  .af26-actions{display:flex;gap:10px;margin-top:24px;justify-content:center;flex-wrap:wrap}
+  .af26-btn{padding:14px 28px;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.3px;font-family:inherit}
   .af26-btn-primary{background:linear-gradient(135deg,#C1272D 0%,#8B1B20 100%);color:#fff}
   .af26-btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 16px rgba(193,39,45,.35)}
   .af26-btn-primary:disabled{background:#ccc;cursor:not-allowed;color:#888}
   .af26-btn-secondary{background:#f0f0f0;color:#444}
   .af26-btn-secondary:hover{background:#e0e0e0}
-  .af26-hint{text-align:center;font-size:12px;color:#888;margin-top:6px;font-style:italic;flex-shrink:0}
+  .af26-hint{text-align:center;font-size:13px;color:#888;margin-top:12px;font-style:italic}
   .af26-result{display:none}
   .af26-result.af26-result-active{display:block}
-  .af26-result-header{padding:16px 18px;background:linear-gradient(135deg,#006233 0%,#C1272D 100%);color:#fff;border-radius:10px;margin-bottom:0;position:relative;overflow:hidden;flex-shrink:0}
-  .af26-result-header h2{margin:0 0 4px;font-size:22px;font-weight:800}
-  .af26-result-header p{margin:0;font-size:13px;opacity:.95}
-  .af26-capture-zone{background:#fff;border-radius:10px;display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;margin-bottom:14px}
-  .af26-result-content{flex:1;overflow-y:auto;min-height:0;padding-right:6px}
-  .af26-capture-zone .af26-result-section:first-of-type{margin-top:18px}
-  .af26-capture-credit{text-align:center;padding:10px 16px;border-top:2px dashed #ddd;color:#888;font-size:12px;font-style:italic;flex-shrink:0}
+  .af26-result-header{padding:20px 22px;background:linear-gradient(135deg,#006233 0%,#C1272D 100%);color:#fff;border-radius:10px;margin-bottom:0;position:relative;overflow:hidden}
+  .af26-result-header h2{margin:0 0 6px;font-size:24px;font-weight:800}
+  .af26-result-header p{margin:0;font-size:14px;opacity:.95}
+  .af26-capture-zone{background:#fff;border-radius:10px;padding-bottom:0;margin-bottom:20px}
+  .af26-capture-zone .af26-result-section:first-of-type{margin-top:24px}
+  .af26-capture-credit{text-align:center;padding:16px 16px 20px;border-top:2px dashed #ddd;color:#888;font-size:13px;font-style:italic;margin-top:8px}
   .af26-share-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
   .af26-share-actions .af26-sbtn{margin:0;display:inline-flex}
   .af26-download{background:linear-gradient(135deg,#006233 0%,#004d27 100%)}
@@ -75,10 +71,10 @@
   .af26-badge{background:#C1272D;color:#fff;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700}
   .af26-result-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin:0;padding:0;list-style:none}
   .af26-result-item{background:#fff;padding:10px 14px;border-radius:6px;border:1px solid #eee;font-size:14px;font-weight:600;color:#222}
-  .af26-share-block{margin:0 0 10px;padding:14px 16px;background:#fff;border-radius:10px;border:2px dashed #ddd;flex-shrink:0}
-  .af26-share-block h3{text-align:center;margin:0 0 10px;color:#444;font-size:14px;font-weight:700}
-  .af26-share-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
-  .af26-sbtn{padding:9px 14px;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;color:#fff;display:inline-flex;align-items:center;gap:6px;transition:all .2s;font-family:inherit}
+  .af26-share-block{margin:24px 0;padding:24px 20px;background:#fff;border-radius:10px;border:2px dashed #ddd}
+  .af26-share-block h3{text-align:center;margin:0 0 16px;color:#444;font-size:17px;font-weight:700}
+  .af26-share-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+  .af26-sbtn{padding:11px 18px;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;color:#fff;display:inline-flex;align-items:center;gap:8px;transition:all .2s;font-family:inherit}
   .af26-sbtn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.2)}
   .af26-sbtn svg{width:18px;height:18px;fill:currentColor}
   .af26-x{background:#000}
@@ -404,20 +400,7 @@
     btn.disabled = true;
     function doCapture(){
       var target = root.querySelector('.af26-capture-zone');
-      var content = root.querySelector('.af26-result-content');
-      var savedZone = target.style.cssText;
-      var savedContent = content.style.cssText;
-      target.style.height = 'auto';
-      target.style.maxHeight = 'none';
-      target.style.overflow = 'visible';
-      target.style.flex = 'none';
-      content.style.height = 'auto';
-      content.style.maxHeight = 'none';
-      content.style.overflow = 'visible';
-      content.style.flex = 'none';
-      function restore(){ target.style.cssText = savedZone; content.style.cssText = savedContent; }
-      window.html2canvas(target, {backgroundColor:'#ffffff', scale:2, useCORS:true, logging:false, windowWidth:target.scrollWidth, windowHeight:target.scrollHeight}).then(function(canvas){
-        restore();
+      window.html2canvas(target, {backgroundColor:'#ffffff', scale:2, useCORS:true, logging:false}).then(function(canvas){
         var link = document.createElement('a');
         link.download = 'mes-26-lions-atlas.png';
         link.href = canvas.toDataURL('image/png');
@@ -427,7 +410,6 @@
         btn.innerHTML = "✅ Téléchargé !";
         setTimeout(function(){ btn.innerHTML = orig; btn.disabled = false; }, 2000);
       }).catch(function(err){
-        restore();
         btn.innerHTML = orig;
         btn.disabled = false;
         alert("Impossible de générer l'image. Réessaie ou prends une capture d'écran.");
