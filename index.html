@@ -396,8 +396,21 @@
   root.querySelector('.af26-reset').addEventListener('click', resetAll);
   root.querySelector('.af26-back').addEventListener('click', backToSelection);
 
+  function postHeight(){
+    try {
+      var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight, document.documentElement.offsetHeight);
+      parent.postMessage({af26:'resize', height:h}, '*');
+    } catch(e){}
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(postHeight).observe(document.body);
+  }
+  window.addEventListener('load', postHeight);
+  window.addEventListener('resize', postHeight);
+
   buildGrid();
   updateUI();
+  setTimeout(postHeight, 50);
 })();
 </script>
 </body>
