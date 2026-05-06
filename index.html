@@ -290,14 +290,18 @@
   }
 
   function buildShareText(){
-    var lines = ["🇲🇦 Voici mes 26 Lions de l'Atlas pour la Coupe du Monde 2026 ⚽\n"];
-    ['GK','DEF','MID','ATT'].forEach(function(pos){
-      var ids = Array.from(selected[pos]).sort(function(a,b){return a-b;});
-      if(ids.length === 0) return;
-      var names = ids.map(function(i){ return PLAYERS[pos][i]; });
-      lines.push(POS_EMOJI[pos] + " " + POS_LABELS[pos] + " (" + ids.length + "): " + names.join(", "));
-    });
-    lines.push("\n👉 Compose ta liste sur afrik-foot.com");
+    var url = getShareUrl();
+    var lines = [
+      "🇲🇦 Voici mes 26 joueurs marocains pour la Coupe du Monde 2026 ⚽",
+      "",
+      "J'ai pris :",
+      "🥅 Gardiens (" + selected.GK.size + ")",
+      "🛡️ Défenseurs (" + selected.DEF.size + ")",
+      "⚙️ Milieux (" + selected.MID.size + ")",
+      "⚔️ Attaquants (" + selected.ATT.size + ")",
+      "",
+      "👉 Compose ta liste sur " + url
+    ];
     return lines.join("\n");
   }
 
@@ -335,7 +339,7 @@
     var shareUrl;
     switch(platform){
       case 'x':
-        shareUrl = 'https://twitter.com/intent/tweet?text='+encText+'&url='+encUrl;
+        shareUrl = 'https://twitter.com/intent/tweet?text='+encText;
         window.open(shareUrl, '_blank', 'width=600,height=600,noopener');
         break;
       case 'fb':
@@ -343,20 +347,20 @@
         window.open(shareUrl, '_blank', 'width=600,height=600,noopener');
         break;
       case 'wa':
-        shareUrl = 'https://wa.me/?text='+encodeURIComponent(text+'\n\n'+url);
+        shareUrl = 'https://wa.me/?text='+encText;
         window.open(shareUrl, '_blank', 'noopener');
         break;
       case 'ig':
         if (navigator.share) {
-          navigator.share({title:"Mes 26 Lions de l'Atlas", text:text, url:url}).catch(function(){});
+          navigator.share({title:"Mes 26 Lions de l'Atlas", text:text}).catch(function(){});
         } else {
-          copyToClipboard(text+'\n'+url, function(){
+          copyToClipboard(text, function(){
             alert("Texte copié ! Colle-le dans Instagram (story, post ou DM).");
           });
         }
         break;
       case 'copy':
-        copyToClipboard(text+'\n'+url, function(){
+        copyToClipboard(text, function(){
           var orig = btn.innerHTML;
           btn.innerHTML = "✅ Copié !";
           setTimeout(function(){ btn.innerHTML = orig; }, 2000);
