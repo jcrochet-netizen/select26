@@ -302,8 +302,13 @@
   }
 
   function getShareUrl(){
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var u = params.get('u');
+      if (u) return u;
+    } catch(e) {}
     var ref = document.referrer || "";
-    if (ref && ref.indexOf("github.io") === -1) return ref;
+    if (ref && ref.indexOf("github.io") === -1 && ref.indexOf("github.com") === -1) return ref;
     return "https://afrik-foot.com";
   }
 
