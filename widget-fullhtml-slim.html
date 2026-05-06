@@ -1,0 +1,473 @@
+<div class="af-widget">
+<style>
+.af-widget *,.af-widget *::before,.af-widget *::after{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.af-widget{max-width:1100px;margin:0 auto;padding:14px;background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.08);color:#222;line-height:1.4;counter-reset:af-gk 0 af-def 0 af-mid 0 af-att 0 af-total 0}
+.af-widget>input[type="radio"],.af-widget>input[type="checkbox"]{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none;margin:0}
+.af-cb.af-gk:checked{counter-increment:af-gk 1 af-total 1}
+.af-cb.af-def:checked{counter-increment:af-def 1 af-total 1}
+.af-cb.af-mid:checked{counter-increment:af-mid 1 af-total 1}
+.af-cb.af-att:checked{counter-increment:af-att 1 af-total 1}
+.af-n-gk::before{content:counter(af-gk)}
+.af-n-def::before{content:counter(af-def)}
+.af-n-mid::before{content:counter(af-mid)}
+.af-n-att::before{content:counter(af-att)}
+.af-n-total::before{content:counter(af-total)}
+.af-shell{display:flex;flex-direction:column}
+.af-shell>.af-header{order:1}
+.af-shell>.af-counter-bar{order:2}
+.af-shell>.af-tabs-section{order:3}
+.af-shell>.af-result{order:4}
+.af-header{padding:14px 18px;background:linear-gradient(135deg,#C1272D 0%,#8B1B20 100%);color:#fff;border-radius:10px;margin-bottom:14px;position:relative;overflow:hidden}
+.af-header-row{display:flex;align-items:center;gap:14px;justify-content:center;flex-wrap:wrap}
+.af-header-logo,.af-result-logo{background-image:url('https://raw.githubusercontent.com/jcrochet-netizen/select26/main/afrikfoot.png');background-position:center;background-repeat:no-repeat;background-size:contain;display:block}
+.af-header-logo{width:70px;height:70px;background-color:#fff;border-radius:50%;padding:8px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.15);background-size:78% auto !important}
+.af-header-text{flex:1;min-width:200px}
+.af-header h2{margin:0 0 4px;font-size:22px;font-weight:800}
+.af-header p{margin:0;font-size:13px;opacity:.95}
+.af-counter-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px}
+.af-c{background:#f5f5f5;border-radius:6px;padding:7px 6px;text-align:center;border:2px solid #e5e5e5;transition:all .2s}
+.af-c-total{background:#fff8e1;border-color:#FFC107}
+.af-c-tab{cursor:pointer;display:block}
+.af-c-tab:hover{border-color:#C1272D;background:#fff;transform:translateY(-1px);box-shadow:0 3px 8px rgba(193,39,45,.15)}
+.af-c-label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#666;font-weight:600}
+.af-c-num{display:block;font-size:16px;font-weight:800;color:#222;margin-top:2px;line-height:1.1}
+.af-c-num small{font-size:10px;color:#888;font-weight:500}
+#af-t-gk:checked~.af-shell label[for="af-t-gk"],#af-t-def:checked~.af-shell label[for="af-t-def"],#af-t-mid:checked~.af-shell label[for="af-t-mid"],#af-t-att:checked~.af-shell label[for="af-t-att"]{border-color:#C1272D !important;background:#fff !important;box-shadow:0 3px 10px rgba(193,39,45,.25);transform:translateY(-1px)}
+#af-t-gk:checked~.af-shell label[for="af-t-gk"] .af-c-label,#af-t-def:checked~.af-shell label[for="af-t-def"] .af-c-label,#af-t-mid:checked~.af-shell label[for="af-t-mid"] .af-c-label,#af-t-att:checked~.af-shell label[for="af-t-att"] .af-c-label{color:#C1272D}
+.af-section{display:none;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+#af-t-gk:checked~.af-shell .af-s-gk,#af-t-def:checked~.af-shell .af-s-def,#af-t-mid:checked~.af-shell .af-s-mid,#af-t-att:checked~.af-shell .af-s-att{display:grid}
+.af-card{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fafafa;border:2px solid #eee;border-radius:8px;cursor:pointer;transition:all .2s;user-select:none}
+.af-card:hover{border-color:#C1272D;background:#fff}
+.af-check{width:20px;height:20px;border-radius:50%;border:2px solid #ccc;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.af-name{font-weight:700;font-size:13px;line-height:1.2}
+.af-widget:has(#af-p-gk-1:checked) .af-card[for="af-p-gk-1"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-gk-1:checked) .af-card[for="af-p-gk-1"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-gk-1:checked) .af-card[for="af-p-gk-1"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-gk-2:checked) .af-card[for="af-p-gk-2"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-gk-2:checked) .af-card[for="af-p-gk-2"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-gk-2:checked) .af-card[for="af-p-gk-2"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-gk-3:checked) .af-card[for="af-p-gk-3"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-gk-3:checked) .af-card[for="af-p-gk-3"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-gk-3:checked) .af-card[for="af-p-gk-3"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-gk-4:checked) .af-card[for="af-p-gk-4"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-gk-4:checked) .af-card[for="af-p-gk-4"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-gk-4:checked) .af-card[for="af-p-gk-4"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-1:checked) .af-card[for="af-p-def-1"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-1:checked) .af-card[for="af-p-def-1"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-1:checked) .af-card[for="af-p-def-1"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-2:checked) .af-card[for="af-p-def-2"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-2:checked) .af-card[for="af-p-def-2"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-2:checked) .af-card[for="af-p-def-2"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-3:checked) .af-card[for="af-p-def-3"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-3:checked) .af-card[for="af-p-def-3"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-3:checked) .af-card[for="af-p-def-3"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-4:checked) .af-card[for="af-p-def-4"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-4:checked) .af-card[for="af-p-def-4"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-4:checked) .af-card[for="af-p-def-4"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-5:checked) .af-card[for="af-p-def-5"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-5:checked) .af-card[for="af-p-def-5"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-5:checked) .af-card[for="af-p-def-5"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-6:checked) .af-card[for="af-p-def-6"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-6:checked) .af-card[for="af-p-def-6"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-6:checked) .af-card[for="af-p-def-6"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-7:checked) .af-card[for="af-p-def-7"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-7:checked) .af-card[for="af-p-def-7"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-7:checked) .af-card[for="af-p-def-7"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-8:checked) .af-card[for="af-p-def-8"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-8:checked) .af-card[for="af-p-def-8"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-8:checked) .af-card[for="af-p-def-8"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-9:checked) .af-card[for="af-p-def-9"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-9:checked) .af-card[for="af-p-def-9"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-9:checked) .af-card[for="af-p-def-9"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-10:checked) .af-card[for="af-p-def-10"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-10:checked) .af-card[for="af-p-def-10"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-10:checked) .af-card[for="af-p-def-10"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-11:checked) .af-card[for="af-p-def-11"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-11:checked) .af-card[for="af-p-def-11"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-11:checked) .af-card[for="af-p-def-11"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-12:checked) .af-card[for="af-p-def-12"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-12:checked) .af-card[for="af-p-def-12"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-12:checked) .af-card[for="af-p-def-12"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-13:checked) .af-card[for="af-p-def-13"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-13:checked) .af-card[for="af-p-def-13"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-13:checked) .af-card[for="af-p-def-13"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-14:checked) .af-card[for="af-p-def-14"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-14:checked) .af-card[for="af-p-def-14"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-14:checked) .af-card[for="af-p-def-14"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-15:checked) .af-card[for="af-p-def-15"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-15:checked) .af-card[for="af-p-def-15"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-15:checked) .af-card[for="af-p-def-15"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-def-16:checked) .af-card[for="af-p-def-16"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-def-16:checked) .af-card[for="af-p-def-16"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-def-16:checked) .af-card[for="af-p-def-16"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-mid-1:checked) .af-card[for="af-p-mid-1"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-mid-1:checked) .af-card[for="af-p-mid-1"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-mid-1:checked) .af-card[for="af-p-mid-1"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-mid-2:checked) .af-card[for="af-p-mid-2"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-mid-2:checked) .af-card[for="af-p-mid-2"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-mid-2:checked) .af-card[for="af-p-mid-2"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-mid-3:checked) .af-card[for="af-p-mid-3"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-mid-3:checked) .af-card[for="af-p-mid-3"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-mid-3:checked) .af-card[for="af-p-mid-3"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-mid-4:checked) .af-card[for="af-p-mid-4"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-mid-4:checked) .af-card[for="af-p-mid-4"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-mid-4:checked) .af-card[for="af-p-mid-4"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-mid-5:checked) .af-card[for="af-p-mid-5"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-mid-5:checked) .af-card[for="af-p-mid-5"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-mid-5:checked) .af-card[for="af-p-mid-5"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-mid-6:checked) .af-card[for="af-p-mid-6"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-mid-6:checked) .af-card[for="af-p-mid-6"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-mid-6:checked) .af-card[for="af-p-mid-6"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-mid-7:checked) .af-card[for="af-p-mid-7"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-mid-7:checked) .af-card[for="af-p-mid-7"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-mid-7:checked) .af-card[for="af-p-mid-7"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-mid-8:checked) .af-card[for="af-p-mid-8"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-mid-8:checked) .af-card[for="af-p-mid-8"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-mid-8:checked) .af-card[for="af-p-mid-8"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-mid-9:checked) .af-card[for="af-p-mid-9"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-mid-9:checked) .af-card[for="af-p-mid-9"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-mid-9:checked) .af-card[for="af-p-mid-9"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-mid-10:checked) .af-card[for="af-p-mid-10"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-mid-10:checked) .af-card[for="af-p-mid-10"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-mid-10:checked) .af-card[for="af-p-mid-10"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-1:checked) .af-card[for="af-p-att-1"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-1:checked) .af-card[for="af-p-att-1"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-1:checked) .af-card[for="af-p-att-1"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-2:checked) .af-card[for="af-p-att-2"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-2:checked) .af-card[for="af-p-att-2"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-2:checked) .af-card[for="af-p-att-2"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-3:checked) .af-card[for="af-p-att-3"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-3:checked) .af-card[for="af-p-att-3"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-3:checked) .af-card[for="af-p-att-3"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-4:checked) .af-card[for="af-p-att-4"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-4:checked) .af-card[for="af-p-att-4"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-4:checked) .af-card[for="af-p-att-4"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-5:checked) .af-card[for="af-p-att-5"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-5:checked) .af-card[for="af-p-att-5"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-5:checked) .af-card[for="af-p-att-5"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-6:checked) .af-card[for="af-p-att-6"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-6:checked) .af-card[for="af-p-att-6"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-6:checked) .af-card[for="af-p-att-6"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-7:checked) .af-card[for="af-p-att-7"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-7:checked) .af-card[for="af-p-att-7"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-7:checked) .af-card[for="af-p-att-7"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-8:checked) .af-card[for="af-p-att-8"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-8:checked) .af-card[for="af-p-att-8"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-8:checked) .af-card[for="af-p-att-8"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-9:checked) .af-card[for="af-p-att-9"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-9:checked) .af-card[for="af-p-att-9"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-9:checked) .af-card[for="af-p-att-9"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-10:checked) .af-card[for="af-p-att-10"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-10:checked) .af-card[for="af-p-att-10"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-10:checked) .af-card[for="af-p-att-10"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-11:checked) .af-card[for="af-p-att-11"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-11:checked) .af-card[for="af-p-att-11"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-11:checked) .af-card[for="af-p-att-11"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-12:checked) .af-card[for="af-p-att-12"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-12:checked) .af-card[for="af-p-att-12"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-12:checked) .af-card[for="af-p-att-12"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-13:checked) .af-card[for="af-p-att-13"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-13:checked) .af-card[for="af-p-att-13"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-13:checked) .af-card[for="af-p-att-13"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-14:checked) .af-card[for="af-p-att-14"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-14:checked) .af-card[for="af-p-att-14"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-14:checked) .af-card[for="af-p-att-14"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-15:checked) .af-card[for="af-p-att-15"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-15:checked) .af-card[for="af-p-att-15"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-15:checked) .af-card[for="af-p-att-15"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-16:checked) .af-card[for="af-p-att-16"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-16:checked) .af-card[for="af-p-att-16"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-16:checked) .af-card[for="af-p-att-16"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-widget:has(#af-p-att-17:checked) .af-card[for="af-p-att-17"]{background:linear-gradient(135deg,#006233 0%,#004d27 100%);border-color:#006233;color:#fff}
+.af-widget:has(#af-p-att-17:checked) .af-card[for="af-p-att-17"] .af-check{background:#fff;border-color:#fff}
+.af-widget:has(#af-p-att-17:checked) .af-card[for="af-p-att-17"] .af-check::after{content:"\2713";color:#006233;font-weight:900;font-size:13px}
+.af-hint{text-align:center;font-size:12px;color:#888;margin:10px 0 0;font-style:italic}
+.af-result{margin-top:18px;padding:14px;background:#f8f8f8;border-radius:10px;border-top:4px solid #006233}
+.af-result>h2{text-align:center;margin:0 0 4px;color:#006233;font-size:20px}
+.af-result-summary{text-align:center;font-size:14px;font-weight:700;color:#C1272D;margin:0 0 14px}
+.af-result-section{margin-bottom:10px;background:#fff;border-radius:8px;padding:10px 12px;border-left:4px solid #C1272D}
+.af-result-section h3{margin:0 0 8px;color:#C1272D;font-size:13px;text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;gap:6px}
+.af-badge{background:#C1272D;color:#fff;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:700}
+.af-chips{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px}
+.af-chip{background:linear-gradient(135deg,#006233 0%,#004d27 100%);color:#fff;padding:6px 10px;border-radius:5px;font-size:13px;font-weight:600;display:none}
+.af-empty{color:#999;font-style:italic;font-size:13px;margin:0;display:block}
+.af-widget:has(.af-cb.af-gk:checked) .af-rs-gk .af-empty{display:none}
+.af-widget:has(.af-cb.af-def:checked) .af-rs-def .af-empty{display:none}
+.af-widget:has(.af-cb.af-mid:checked) .af-rs-mid .af-empty{display:none}
+.af-widget:has(.af-cb.af-att:checked) .af-rs-att .af-empty{display:none}
+.af-widget:has(#af-p-gk-1:checked) .af-chip[data-pid="af-p-gk-1"]{display:block}
+.af-widget:has(#af-p-gk-2:checked) .af-chip[data-pid="af-p-gk-2"]{display:block}
+.af-widget:has(#af-p-gk-3:checked) .af-chip[data-pid="af-p-gk-3"]{display:block}
+.af-widget:has(#af-p-gk-4:checked) .af-chip[data-pid="af-p-gk-4"]{display:block}
+.af-widget:has(#af-p-def-1:checked) .af-chip[data-pid="af-p-def-1"]{display:block}
+.af-widget:has(#af-p-def-2:checked) .af-chip[data-pid="af-p-def-2"]{display:block}
+.af-widget:has(#af-p-def-3:checked) .af-chip[data-pid="af-p-def-3"]{display:block}
+.af-widget:has(#af-p-def-4:checked) .af-chip[data-pid="af-p-def-4"]{display:block}
+.af-widget:has(#af-p-def-5:checked) .af-chip[data-pid="af-p-def-5"]{display:block}
+.af-widget:has(#af-p-def-6:checked) .af-chip[data-pid="af-p-def-6"]{display:block}
+.af-widget:has(#af-p-def-7:checked) .af-chip[data-pid="af-p-def-7"]{display:block}
+.af-widget:has(#af-p-def-8:checked) .af-chip[data-pid="af-p-def-8"]{display:block}
+.af-widget:has(#af-p-def-9:checked) .af-chip[data-pid="af-p-def-9"]{display:block}
+.af-widget:has(#af-p-def-10:checked) .af-chip[data-pid="af-p-def-10"]{display:block}
+.af-widget:has(#af-p-def-11:checked) .af-chip[data-pid="af-p-def-11"]{display:block}
+.af-widget:has(#af-p-def-12:checked) .af-chip[data-pid="af-p-def-12"]{display:block}
+.af-widget:has(#af-p-def-13:checked) .af-chip[data-pid="af-p-def-13"]{display:block}
+.af-widget:has(#af-p-def-14:checked) .af-chip[data-pid="af-p-def-14"]{display:block}
+.af-widget:has(#af-p-def-15:checked) .af-chip[data-pid="af-p-def-15"]{display:block}
+.af-widget:has(#af-p-def-16:checked) .af-chip[data-pid="af-p-def-16"]{display:block}
+.af-widget:has(#af-p-mid-1:checked) .af-chip[data-pid="af-p-mid-1"]{display:block}
+.af-widget:has(#af-p-mid-2:checked) .af-chip[data-pid="af-p-mid-2"]{display:block}
+.af-widget:has(#af-p-mid-3:checked) .af-chip[data-pid="af-p-mid-3"]{display:block}
+.af-widget:has(#af-p-mid-4:checked) .af-chip[data-pid="af-p-mid-4"]{display:block}
+.af-widget:has(#af-p-mid-5:checked) .af-chip[data-pid="af-p-mid-5"]{display:block}
+.af-widget:has(#af-p-mid-6:checked) .af-chip[data-pid="af-p-mid-6"]{display:block}
+.af-widget:has(#af-p-mid-7:checked) .af-chip[data-pid="af-p-mid-7"]{display:block}
+.af-widget:has(#af-p-mid-8:checked) .af-chip[data-pid="af-p-mid-8"]{display:block}
+.af-widget:has(#af-p-mid-9:checked) .af-chip[data-pid="af-p-mid-9"]{display:block}
+.af-widget:has(#af-p-mid-10:checked) .af-chip[data-pid="af-p-mid-10"]{display:block}
+.af-widget:has(#af-p-att-1:checked) .af-chip[data-pid="af-p-att-1"]{display:block}
+.af-widget:has(#af-p-att-2:checked) .af-chip[data-pid="af-p-att-2"]{display:block}
+.af-widget:has(#af-p-att-3:checked) .af-chip[data-pid="af-p-att-3"]{display:block}
+.af-widget:has(#af-p-att-4:checked) .af-chip[data-pid="af-p-att-4"]{display:block}
+.af-widget:has(#af-p-att-5:checked) .af-chip[data-pid="af-p-att-5"]{display:block}
+.af-widget:has(#af-p-att-6:checked) .af-chip[data-pid="af-p-att-6"]{display:block}
+.af-widget:has(#af-p-att-7:checked) .af-chip[data-pid="af-p-att-7"]{display:block}
+.af-widget:has(#af-p-att-8:checked) .af-chip[data-pid="af-p-att-8"]{display:block}
+.af-widget:has(#af-p-att-9:checked) .af-chip[data-pid="af-p-att-9"]{display:block}
+.af-widget:has(#af-p-att-10:checked) .af-chip[data-pid="af-p-att-10"]{display:block}
+.af-widget:has(#af-p-att-11:checked) .af-chip[data-pid="af-p-att-11"]{display:block}
+.af-widget:has(#af-p-att-12:checked) .af-chip[data-pid="af-p-att-12"]{display:block}
+.af-widget:has(#af-p-att-13:checked) .af-chip[data-pid="af-p-att-13"]{display:block}
+.af-widget:has(#af-p-att-14:checked) .af-chip[data-pid="af-p-att-14"]{display:block}
+.af-widget:has(#af-p-att-15:checked) .af-chip[data-pid="af-p-att-15"]{display:block}
+.af-widget:has(#af-p-att-16:checked) .af-chip[data-pid="af-p-att-16"]{display:block}
+.af-widget:has(#af-p-att-17:checked) .af-chip[data-pid="af-p-att-17"]{display:block}
+.af-share-block{margin:14px 0 10px;padding:12px 14px;background:#fff;border-radius:8px;border:2px dashed #ddd}
+.af-share-block h3{text-align:center;margin:0 0 10px;color:#444;font-size:14px;font-weight:700}
+.af-share-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.af-sbtn{padding:9px 14px;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;color:#fff !important;display:inline-flex;align-items:center;gap:6px;transition:all .2s;text-decoration:none !important}
+.af-sbtn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.2);color:#fff !important}
+.af-sbtn svg{width:16px;height:16px;fill:currentColor}
+.af-x{background:#000}
+.af-fb{background:#1877F2}
+.af-wa{background:#25D366}
+.af-logo-block{text-align:center;padding:14px 16px 4px;border-top:2px dashed #ccc;margin-top:10px}
+.af-logo-block .af-result-logo{height:60px;max-width:180px;width:100%;margin:0 auto}
+.af-logo-block p{margin:8px 0 0;font-size:12px;color:#888}
+@media (max-width:600px){.af-widget{padding:10px}.af-counter-bar{grid-template-columns:repeat(2,1fr)}.af-c-total{grid-column:span 2}.af-header h2{font-size:18px}.af-section,.af-chips{grid-template-columns:1fr}}
+</style>
+<input type="radio" name="af-tab" id="af-t-gk" checked>
+<input type="radio" name="af-tab" id="af-t-def">
+<input type="radio" name="af-tab" id="af-t-mid">
+<input type="radio" name="af-tab" id="af-t-att">
+<input type="checkbox" id="af-p-gk-1" class="af-cb af-gk">
+<input type="checkbox" id="af-p-gk-2" class="af-cb af-gk">
+<input type="checkbox" id="af-p-gk-3" class="af-cb af-gk">
+<input type="checkbox" id="af-p-gk-4" class="af-cb af-gk">
+<input type="checkbox" id="af-p-def-1" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-2" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-3" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-4" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-5" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-6" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-7" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-8" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-9" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-10" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-11" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-12" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-13" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-14" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-15" class="af-cb af-def">
+<input type="checkbox" id="af-p-def-16" class="af-cb af-def">
+<input type="checkbox" id="af-p-mid-1" class="af-cb af-mid">
+<input type="checkbox" id="af-p-mid-2" class="af-cb af-mid">
+<input type="checkbox" id="af-p-mid-3" class="af-cb af-mid">
+<input type="checkbox" id="af-p-mid-4" class="af-cb af-mid">
+<input type="checkbox" id="af-p-mid-5" class="af-cb af-mid">
+<input type="checkbox" id="af-p-mid-6" class="af-cb af-mid">
+<input type="checkbox" id="af-p-mid-7" class="af-cb af-mid">
+<input type="checkbox" id="af-p-mid-8" class="af-cb af-mid">
+<input type="checkbox" id="af-p-mid-9" class="af-cb af-mid">
+<input type="checkbox" id="af-p-mid-10" class="af-cb af-mid">
+<input type="checkbox" id="af-p-att-1" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-2" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-3" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-4" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-5" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-6" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-7" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-8" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-9" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-10" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-11" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-12" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-13" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-14" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-15" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-16" class="af-cb af-att">
+<input type="checkbox" id="af-p-att-17" class="af-cb af-att">
+<div class="af-shell">
+  <div class="af-header">
+    <div class="af-header-row">
+      <div class="af-header-logo" role="img" aria-label="Afrik-Foot.com"></div>
+      <div class="af-header-text">
+        <h2>🇲🇦 Tes 26 Lions de l'Atlas pour la Coupe du Monde</h2>
+        <p>Compose ta liste idéale parmi les joueurs marocains</p>
+      </div>
+    </div>
+  </div>
+  <div class="af-tabs-section">
+    <div class="af-section af-s-gk">
+      <label for="af-p-gk-1" class="af-card"><span class="af-check"></span><span class="af-name">Yassine Bounou</span></label>
+      <label for="af-p-gk-2" class="af-card"><span class="af-check"></span><span class="af-name">El Mehdi Benabid</span></label>
+      <label for="af-p-gk-3" class="af-card"><span class="af-check"></span><span class="af-name">El Mehdi Al Harrar</span></label>
+      <label for="af-p-gk-4" class="af-card"><span class="af-check"></span><span class="af-name">Munir El Kajoui</span></label>
+    </div>
+    <div class="af-section af-s-def">
+      <label for="af-p-def-1" class="af-card"><span class="af-check"></span><span class="af-name">Nayef Aguerd</span></label>
+      <label for="af-p-def-2" class="af-card"><span class="af-check"></span><span class="af-name">Issa Diop</span></label>
+      <label for="af-p-def-3" class="af-card"><span class="af-check"></span><span class="af-name">Chadi Riad</span></label>
+      <label for="af-p-def-4" class="af-card"><span class="af-check"></span><span class="af-name">Abdelhamid Aït Boudlal</span></label>
+      <label for="af-p-def-5" class="af-card"><span class="af-check"></span><span class="af-name">Adam Masina</span></label>
+      <label for="af-p-def-6" class="af-card"><span class="af-check"></span><span class="af-name">Jawad El Yamiq</span></label>
+      <label for="af-p-def-7" class="af-card"><span class="af-check"></span><span class="af-name">Redouane Halhal</span></label>
+      <label for="af-p-def-8" class="af-card"><span class="af-check"></span><span class="af-name">Ismaël Baouf</span></label>
+      <label for="af-p-def-9" class="af-card"><span class="af-check"></span><span class="af-name">Achraf Hakimi</span></label>
+      <label for="af-p-def-10" class="af-card"><span class="af-check"></span><span class="af-name">Zakaria El Ouahdi</span></label>
+      <label for="af-p-def-11" class="af-card"><span class="af-check"></span><span class="af-name">Omar El Hilali</span></label>
+      <label for="af-p-def-12" class="af-card"><span class="af-check"></span><span class="af-name">Mohamed Chibi</span></label>
+      <label for="af-p-def-13" class="af-card"><span class="af-check"></span><span class="af-name">Noussair Mazraoui</span></label>
+      <label for="af-p-def-14" class="af-card"><span class="af-check"></span><span class="af-name">Anass Salah-Eddine</span></label>
+      <label for="af-p-def-15" class="af-card"><span class="af-check"></span><span class="af-name">Souffian El Karouani</span></label>
+      <label for="af-p-def-16" class="af-card"><span class="af-check"></span><span class="af-name">Youssef Belammari</span></label>
+    </div>
+    <div class="af-section af-s-mid">
+      <label for="af-p-mid-1" class="af-card"><span class="af-check"></span><span class="af-name">Neil El Aynaoui</span></label>
+      <label for="af-p-mid-2" class="af-card"><span class="af-check"></span><span class="af-name">Azzedine Ounahi</span></label>
+      <label for="af-p-mid-3" class="af-card"><span class="af-check"></span><span class="af-name">Ismael Saibari</span></label>
+      <label for="af-p-mid-4" class="af-card"><span class="af-check"></span><span class="af-name">Bilal El Khannouss</span></label>
+      <label for="af-p-mid-5" class="af-card"><span class="af-check"></span><span class="af-name">Samir El Mourabet</span></label>
+      <label for="af-p-mid-6" class="af-card"><span class="af-check"></span><span class="af-name">Oussama Targhalline</span></label>
+      <label for="af-p-mid-7" class="af-card"><span class="af-check"></span><span class="af-name">Sofyan Amrabat</span></label>
+      <label for="af-p-mid-8" class="af-card"><span class="af-check"></span><span class="af-name">Ayyoub Bouaddi</span></label>
+      <label for="af-p-mid-9" class="af-card"><span class="af-check"></span><span class="af-name">Mohamed Rabie Hrimat</span></label>
+      <label for="af-p-mid-10" class="af-card"><span class="af-check"></span><span class="af-name">Imran Louza</span></label>
+    </div>
+    <div class="af-section af-s-att">
+      <label for="af-p-att-1" class="af-card"><span class="af-check"></span><span class="af-name">Brahim Diaz</span></label>
+      <label for="af-p-att-2" class="af-card"><span class="af-check"></span><span class="af-name">Ayoub El Kaabi</span></label>
+      <label for="af-p-att-3" class="af-card"><span class="af-check"></span><span class="af-name">Ez Abde</span></label>
+      <label for="af-p-att-4" class="af-card"><span class="af-check"></span><span class="af-name">Soufiane Rahimi</span></label>
+      <label for="af-p-att-5" class="af-card"><span class="af-check"></span><span class="af-name">Yassine Gessime</span></label>
+      <label for="af-p-att-6" class="af-card"><span class="af-check"></span><span class="af-name">Youssef En-Nesyri</span></label>
+      <label for="af-p-att-7" class="af-card"><span class="af-check"></span><span class="af-name">Ilias Akhomach</span></label>
+      <label for="af-p-att-8" class="af-card"><span class="af-check"></span><span class="af-name">Rayane Bounida</span></label>
+      <label for="af-p-att-9" class="af-card"><span class="af-check"></span><span class="af-name">Hakim Ziyech</span></label>
+      <label for="af-p-att-10" class="af-card"><span class="af-check"></span><span class="af-name">Sofiane Boufal</span></label>
+      <label for="af-p-att-11" class="af-card"><span class="af-check"></span><span class="af-name">Yassir Zabiri</span></label>
+      <label for="af-p-att-12" class="af-card"><span class="af-check"></span><span class="af-name">Chemsdine Talbi</span></label>
+      <label for="af-p-att-13" class="af-card"><span class="af-check"></span><span class="af-name">Amine Adli</span></label>
+      <label for="af-p-att-14" class="af-card"><span class="af-check"></span><span class="af-name">Eliesse Ben Seghir</span></label>
+      <label for="af-p-att-15" class="af-card"><span class="af-check"></span><span class="af-name">Othmane Maamma</span></label>
+      <label for="af-p-att-16" class="af-card"><span class="af-check"></span><span class="af-name">Yanis Begraoui</span></label>
+      <label for="af-p-att-17" class="af-card"><span class="af-check"></span><span class="af-name">Sofiane Diop</span></label>
+    </div>
+    <p class="af-hint">Sélectionne au moins 3 gardiens, 7 défenseurs, 7 milieux et 7 attaquants — pour un total de 26.</p>
+  </div>
+  <div class="af-counter-bar">
+    <div class="af-c af-c-total"><span class="af-c-label">Total</span><span class="af-c-num"><span class="af-n-total"></span><small>/26</small></span></div>
+    <label for="af-t-gk" class="af-c af-c-tab"><span class="af-c-label">Gardiens</span><span class="af-c-num"><span class="af-n-gk"></span><small>/3 min</small></span></label>
+    <label for="af-t-def" class="af-c af-c-tab"><span class="af-c-label">Défenseurs</span><span class="af-c-num"><span class="af-n-def"></span><small>/7 min</small></span></label>
+    <label for="af-t-mid" class="af-c af-c-tab"><span class="af-c-label">Milieux</span><span class="af-c-num"><span class="af-n-mid"></span><small>/7 min</small></span></label>
+    <label for="af-t-att" class="af-c af-c-tab"><span class="af-c-label">Attaquants</span><span class="af-c-num"><span class="af-n-att"></span><small>/7 min</small></span></label>
+  </div>
+  <div class="af-result">
+    <h2>Ma sélection</h2>
+    <p class="af-result-summary"><span class="af-n-total"></span> joueur(s) sélectionné(s) sur 26</p>
+    <div class="af-result-section af-rs-gk">
+      <h3>Gardiens <span class="af-badge"><span class="af-n-gk"></span></span></h3>
+      <ul class="af-chips">
+        <li class="af-chip" data-pid="af-p-gk-1">Yassine Bounou</li>
+        <li class="af-chip" data-pid="af-p-gk-2">El Mehdi Benabid</li>
+        <li class="af-chip" data-pid="af-p-gk-3">El Mehdi Al Harrar</li>
+        <li class="af-chip" data-pid="af-p-gk-4">Munir El Kajoui</li>
+      </ul>
+      <p class="af-empty">Aucun gardien sélectionné</p>
+    </div>
+    <div class="af-result-section af-rs-def">
+      <h3>Défenseurs <span class="af-badge"><span class="af-n-def"></span></span></h3>
+      <ul class="af-chips">
+        <li class="af-chip" data-pid="af-p-def-1">Nayef Aguerd</li>
+        <li class="af-chip" data-pid="af-p-def-2">Issa Diop</li>
+        <li class="af-chip" data-pid="af-p-def-3">Chadi Riad</li>
+        <li class="af-chip" data-pid="af-p-def-4">Abdelhamid Aït Boudlal</li>
+        <li class="af-chip" data-pid="af-p-def-5">Adam Masina</li>
+        <li class="af-chip" data-pid="af-p-def-6">Jawad El Yamiq</li>
+        <li class="af-chip" data-pid="af-p-def-7">Redouane Halhal</li>
+        <li class="af-chip" data-pid="af-p-def-8">Ismaël Baouf</li>
+        <li class="af-chip" data-pid="af-p-def-9">Achraf Hakimi</li>
+        <li class="af-chip" data-pid="af-p-def-10">Zakaria El Ouahdi</li>
+        <li class="af-chip" data-pid="af-p-def-11">Omar El Hilali</li>
+        <li class="af-chip" data-pid="af-p-def-12">Mohamed Chibi</li>
+        <li class="af-chip" data-pid="af-p-def-13">Noussair Mazraoui</li>
+        <li class="af-chip" data-pid="af-p-def-14">Anass Salah-Eddine</li>
+        <li class="af-chip" data-pid="af-p-def-15">Souffian El Karouani</li>
+        <li class="af-chip" data-pid="af-p-def-16">Youssef Belammari</li>
+      </ul>
+      <p class="af-empty">Aucun défenseur sélectionné</p>
+    </div>
+    <div class="af-result-section af-rs-mid">
+      <h3>Milieux <span class="af-badge"><span class="af-n-mid"></span></span></h3>
+      <ul class="af-chips">
+        <li class="af-chip" data-pid="af-p-mid-1">Neil El Aynaoui</li>
+        <li class="af-chip" data-pid="af-p-mid-2">Azzedine Ounahi</li>
+        <li class="af-chip" data-pid="af-p-mid-3">Ismael Saibari</li>
+        <li class="af-chip" data-pid="af-p-mid-4">Bilal El Khannouss</li>
+        <li class="af-chip" data-pid="af-p-mid-5">Samir El Mourabet</li>
+        <li class="af-chip" data-pid="af-p-mid-6">Oussama Targhalline</li>
+        <li class="af-chip" data-pid="af-p-mid-7">Sofyan Amrabat</li>
+        <li class="af-chip" data-pid="af-p-mid-8">Ayyoub Bouaddi</li>
+        <li class="af-chip" data-pid="af-p-mid-9">Mohamed Rabie Hrimat</li>
+        <li class="af-chip" data-pid="af-p-mid-10">Imran Louza</li>
+      </ul>
+      <p class="af-empty">Aucun milieu sélectionné</p>
+    </div>
+    <div class="af-result-section af-rs-att">
+      <h3>Attaquants <span class="af-badge"><span class="af-n-att"></span></span></h3>
+      <ul class="af-chips">
+        <li class="af-chip" data-pid="af-p-att-1">Brahim Diaz</li>
+        <li class="af-chip" data-pid="af-p-att-2">Ayoub El Kaabi</li>
+        <li class="af-chip" data-pid="af-p-att-3">Ez Abde</li>
+        <li class="af-chip" data-pid="af-p-att-4">Soufiane Rahimi</li>
+        <li class="af-chip" data-pid="af-p-att-5">Yassine Gessime</li>
+        <li class="af-chip" data-pid="af-p-att-6">Youssef En-Nesyri</li>
+        <li class="af-chip" data-pid="af-p-att-7">Ilias Akhomach</li>
+        <li class="af-chip" data-pid="af-p-att-8">Rayane Bounida</li>
+        <li class="af-chip" data-pid="af-p-att-9">Hakim Ziyech</li>
+        <li class="af-chip" data-pid="af-p-att-10">Sofiane Boufal</li>
+        <li class="af-chip" data-pid="af-p-att-11">Yassir Zabiri</li>
+        <li class="af-chip" data-pid="af-p-att-12">Chemsdine Talbi</li>
+        <li class="af-chip" data-pid="af-p-att-13">Amine Adli</li>
+        <li class="af-chip" data-pid="af-p-att-14">Eliesse Ben Seghir</li>
+        <li class="af-chip" data-pid="af-p-att-15">Othmane Maamma</li>
+        <li class="af-chip" data-pid="af-p-att-16">Yanis Begraoui</li>
+        <li class="af-chip" data-pid="af-p-att-17">Sofiane Diop</li>
+      </ul>
+      <p class="af-empty">Aucun attaquant sélectionné</p>
+    </div>
+    <div class="af-share-block">
+      <h3>📢 Partage ta sélection</h3>
+      <div class="af-share-row">
+        <a class="af-sbtn af-x" href="https://twitter.com/intent/tweet?text=%F0%9F%87%B2%F0%9F%87%A6%20J%27ai%20compos%C3%A9%20ma%20s%C3%A9lection%20des%2026%20Lions%20de%20l%27Atlas%20pour%20le%20Mondial%202026%20%E2%9A%BD%0A%0A%F0%9F%91%89%20Compose%20ta%20liste%20sur%20https%3A//www.afrik-foot.com/choisis-tes-26-joueurs-marocains-coupe-du-monde-2026" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span>X</span></a>
+        <a class="af-sbtn af-fb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A//www.afrik-foot.com/choisis-tes-26-joueurs-marocains-coupe-du-monde-2026&quote=%F0%9F%87%B2%F0%9F%87%A6%20J%27ai%20compos%C3%A9%20ma%20s%C3%A9lection%20des%2026%20Lions%20de%20l%27Atlas%20pour%20le%20Mondial%202026%20%E2%9A%BD%0A%0A%F0%9F%91%89%20Compose%20ta%20liste%20sur%20https%3A//www.afrik-foot.com/choisis-tes-26-joueurs-marocains-coupe-du-monde-2026" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg><span>Facebook</span></a>
+        <a class="af-sbtn af-wa" href="https://wa.me/?text=%F0%9F%87%B2%F0%9F%87%A6%20J%27ai%20compos%C3%A9%20ma%20s%C3%A9lection%20des%2026%20Lions%20de%20l%27Atlas%20pour%20le%20Mondial%202026%20%E2%9A%BD%0A%0A%F0%9F%91%89%20Compose%20ta%20liste%20sur%20https%3A//www.afrik-foot.com/choisis-tes-26-joueurs-marocains-coupe-du-monde-2026" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/></svg><span>WhatsApp</span></a>
+      </div>
+    </div>
+    <div class="af-logo-block">
+      <div class="af-result-logo" role="img" aria-label="Afrik-Foot.com"></div>
+      <p>Sélection composée sur afrik-foot.com</p>
+    </div>
+  </div>
+</div>
+</div>
