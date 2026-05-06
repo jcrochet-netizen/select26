@@ -18,10 +18,16 @@
   .af26-header-text{flex:1;min-width:240px}
   .af26-header h2{margin:0 0 6px;font-size:26px;font-weight:800;letter-spacing:.3px}
   .af26-header p{margin:0;font-size:14px;opacity:.95}
-  .af26-counters{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:16px}
-  .af26-counter{background:#f5f5f5;border-radius:6px;padding:7px 6px;text-align:center;border:2px solid transparent;transition:all .25s}
+  .af26-counters{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:18px}
+  .af26-counter{background:#f5f5f5;border-radius:6px;padding:7px 6px;text-align:center;border:2px solid transparent;transition:all .2s;font-family:inherit}
   .af26-counter.af26-total{background:#fff8e1;border-color:#FFC107}
   .af26-counter.af26-ok{background:#e8f5e9;border-color:#006233}
+  .af26-counter-tab{cursor:pointer;border-color:#e5e5e5}
+  .af26-counter-tab:hover{border-color:#C1272D;background:#fff;transform:translateY(-1px);box-shadow:0 3px 8px rgba(193,39,45,.15)}
+  .af26-counter-tab.af26-counter-active{border-color:#C1272D !important;background:#fff !important;box-shadow:0 3px 10px rgba(193,39,45,.25);transform:translateY(-1px)}
+  .af26-counter-tab.af26-counter-active .af26-counter-label{color:#C1272D}
+  .af26-counter-tab.af26-ok{border-color:#006233 !important}
+  .af26-counter-tab.af26-ok.af26-counter-active{border-color:#C1272D !important;background:#e8f5e9 !important}
   .af26-counter-label{font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#666;font-weight:600}
   .af26-counter-value{font-size:16px;font-weight:800;color:#222;margin-top:2px;line-height:1.1}
   .af26-counter-value span{font-size:11px;color:#888;font-weight:500}
@@ -108,29 +114,22 @@
         <div class="af26-counter-label">Total</div>
         <div class="af26-counter-value"><span class="af26-c-val">0</span><span>/26</span></div>
       </div>
-      <div class="af26-counter" data-pos="GK">
+      <button type="button" class="af26-counter af26-counter-tab af26-counter-active" data-pos="GK" data-tab="GK">
         <div class="af26-counter-label">Gardiens</div>
         <div class="af26-counter-value"><span class="af26-c-val">0</span><span>/3 min</span></div>
-      </div>
-      <div class="af26-counter" data-pos="DEF">
+      </button>
+      <button type="button" class="af26-counter af26-counter-tab" data-pos="DEF" data-tab="DEF">
         <div class="af26-counter-label">Défenseurs</div>
         <div class="af26-counter-value"><span class="af26-c-val">0</span><span>/7 min</span></div>
-      </div>
-      <div class="af26-counter" data-pos="MID">
+      </button>
+      <button type="button" class="af26-counter af26-counter-tab" data-pos="MID" data-tab="MID">
         <div class="af26-counter-label">Milieux</div>
         <div class="af26-counter-value"><span class="af26-c-val">0</span><span>/7 min</span></div>
-      </div>
-      <div class="af26-counter" data-pos="ATT">
+      </button>
+      <button type="button" class="af26-counter af26-counter-tab" data-pos="ATT" data-tab="ATT">
         <div class="af26-counter-label">Attaquants</div>
         <div class="af26-counter-value"><span class="af26-c-val">0</span><span>/7 min</span></div>
-      </div>
-    </div>
-
-    <div class="af26-tabs">
-      <button class="af26-tab af26-tab-active" data-tab="GK">Gardiens</button>
-      <button class="af26-tab" data-tab="DEF">Défenseurs</button>
-      <button class="af26-tab" data-tab="MID">Milieux</button>
-      <button class="af26-tab" data-tab="ATT">Attaquants</button>
+      </button>
     </div>
 
     <div class="af26-section af26-section-active" data-section="GK"><div class="af26-grid"></div></div>
@@ -162,6 +161,9 @@
 
     <div class="af26-share-block">
       <h3>📢 Partage ta sélection</h3>
+      <div class="af26-share-actions af26-download-row">
+        <button class="af26-sbtn af26-download" data-share="download">📥 Télécharger l'image</button>
+      </div>
       <div class="af26-share-row">
         <button class="af26-sbtn af26-x" data-share="x" aria-label="Partager sur X">
           <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -182,7 +184,6 @@
       </div>
       <div class="af26-share-actions">
         <button class="af26-sbtn af26-copy" data-share="copy">📋 Copier le texte</button>
-        <button class="af26-sbtn af26-download" data-share="download">📥 Télécharger l'image</button>
       </div>
     </div>
 
@@ -429,11 +430,11 @@
     }
   }
 
-  root.querySelectorAll('.af26-tab').forEach(function(tab){
+  root.querySelectorAll('.af26-counter-tab').forEach(function(tab){
     tab.addEventListener('click', function(){
       var t = tab.dataset.tab;
-      root.querySelectorAll('.af26-tab').forEach(function(x){x.classList.remove('af26-tab-active');});
-      tab.classList.add('af26-tab-active');
+      root.querySelectorAll('.af26-counter-tab').forEach(function(x){x.classList.remove('af26-counter-active');});
+      tab.classList.add('af26-counter-active');
       root.querySelectorAll('.af26-section').forEach(function(s){
         s.classList.toggle('af26-section-active', s.dataset.section === t);
       });
